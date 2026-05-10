@@ -91,7 +91,7 @@ export default async function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <main className="relative z-10 flex flex-col items-center px-6 pt-20 pb-12 text-center">
+      <main className="relative z-10 flex flex-col items-center px-6 pt-20 pb-24 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs mb-6 animate-fade-in"
           style={{ background: 'var(--accent-dim)', border: '1px solid rgba(108,92,231,0.3)', color: 'var(--accent)' }}>
           <Activity size={11} className="animate-pulse" />
@@ -99,7 +99,8 @@ export default async function LandingPage() {
         </div>
 
         <h1 className="text-5xl font-bold tracking-tight mb-4 animate-fade-in-up" style={{ color: 'var(--fg)', animationDelay: '50ms' }}>
-          Quant-Grade Analysis<br />
+          Quant-Grade Analysis
+          <div className="mt-3" />
           <span style={{ background: 'linear-gradient(135deg, var(--accent), #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             Powered by AI
           </span>
@@ -168,7 +169,7 @@ export default async function LandingPage() {
             <p className="text-[10px]" style={{ color: 'var(--fg-dim)' }}>Crypto · Commodities · Indices · Forex</p>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
-            {['₿ BTC','Ξ ETH','◎ SOL','🥇 XAU','📈 SPY','📊 QQQ','€ EUR/USD'].map((a) => (
+            {['₿ BTC', 'Ξ ETH', '◎ SOL', '🥇 XAU', '📈 SPY', '📊 QQQ', '€ EUR/USD'].map((a) => (
               <span key={a} className="text-xs px-2.5 py-1 rounded-lg font-mono"
                 style={{ background: 'var(--bg-surface)', color: 'var(--fg-muted)', border: '1px solid var(--border)' }}>
                 {a}
