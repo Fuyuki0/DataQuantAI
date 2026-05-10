@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Chart Controls
+// DataQuantAI — Chart Controls
 // ═══════════════════════════════════════════
 
 'use client';

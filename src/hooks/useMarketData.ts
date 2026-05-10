@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Market Data Hook (SWR)
+// DataQuantAI — Market Data Hook (SWR)
 // ═══════════════════════════════════════════
 
 'use client';

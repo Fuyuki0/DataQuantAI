@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Utility Functions
+// DataQuantAI — Utility Functions
 // ═══════════════════════════════════════════
 
 import { clsx, type ClassValue } from 'clsx';

@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Prisma Client Singleton (Prisma 7)
+// DataQuantAI — Prisma Client Singleton (Prisma 7)
 // Uses @prisma/adapter-pg driver adapter
 // ═══════════════════════════════════════════
 

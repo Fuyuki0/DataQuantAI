@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Symbol Selector
+// DataQuantAI — Symbol Selector
 // ═══════════════════════════════════════════
 
 'use client';

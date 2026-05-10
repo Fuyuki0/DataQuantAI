@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — CoinGecko Market Data Client
+// DataQuantAI — CoinGecko Market Data Client
 // ═══════════════════════════════════════════
 
 import type { OHLCVData, TechnicalIndicators } from '@/types';

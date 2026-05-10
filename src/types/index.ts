@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Type Definitions
+// DataQuantAI — Type Definitions
 // ═══════════════════════════════════════════
 
 export type AssetType = 'CRYPTO' | 'COMMODITY' | 'INDEX' | 'FOREX';

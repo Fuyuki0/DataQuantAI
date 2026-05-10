@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — TradingView Chart Component
+// DataQuantAI — TradingView Chart Component
 // Uses Lightweight Charts v5 API
 // ═══════════════════════════════════════════
 
@@ -22,9 +22,10 @@ interface TradingChartProps {
   candles: OHLCVData[];
   symbol: string;
   isLoading?: boolean;
+  showVolume?: boolean;
 }
 
-function TradingChartInner({ candles, symbol, isLoading }: TradingChartProps) {
+function TradingChartInner({ candles, symbol, isLoading, showVolume = true }: TradingChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const candleSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
@@ -137,13 +138,19 @@ function TradingChartInner({ candles, symbol, isLoading }: TradingChartProps) {
     }));
 
     candleSeriesRef.current.setData(candleData);
-    volumeSeriesRef.current.setData(volumeData);
+
+    if (showVolume) {
+      volumeSeriesRef.current.setData(volumeData);
+      volumeSeriesRef.current.applyOptions({ visible: true });
+    } else {
+      volumeSeriesRef.current.applyOptions({ visible: false });
+    }
 
     // Fit content
     if (chartRef.current) {
       chartRef.current.timeScale().fitContent();
     }
-  }, [candles]);
+  }, [candles, showVolume]);
 
   return (
     <div className="relative h-full w-full">

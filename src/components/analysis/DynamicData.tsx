@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Dynamic Data Display
+// DataQuantAI — Dynamic Data Display
 // AI-powered analysis from Gemini
 // ═══════════════════════════════════════════
 

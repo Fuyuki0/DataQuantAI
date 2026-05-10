@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Fixed Data Display
+// DataQuantAI — Fixed Data Display
 // Real metrics from market data APIs
 // ═══════════════════════════════════════════
 

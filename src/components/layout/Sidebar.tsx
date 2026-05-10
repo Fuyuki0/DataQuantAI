@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Sidebar Navigation
+// DataQuantAI — Sidebar Navigation
 // ═══════════════════════════════════════════
 
 'use client';
@@ -17,11 +17,8 @@ import {
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-];
-
-const SECONDARY_ITEMS = [
-  { href: '/dashboard/history', icon: History, label: 'History', disabled: true },
-  { href: '/dashboard/settings', icon: Settings, label: 'Settings', disabled: true },
+  { href: '/dashboard/history', icon: History, label: 'History' },
+  { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
 ];
 
 export function Sidebar() {
@@ -35,8 +32,8 @@ export function Sidebar() {
         borderRight: '1px solid var(--border)',
       }}
     >
-      {/* Logo */}
-      <Link href="/dashboard" className="mb-6 group">
+      {/* Logo — links to landing page */}
+      <Link href="/" className="mb-6 group">
         <div
           className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110"
           style={{
@@ -51,7 +48,7 @@ export function Sidebar() {
       {/* Primary nav */}
       <nav className="flex flex-col items-center gap-1 flex-1">
         {NAV_ITEMS.map(({ href, icon: Icon, label }) => {
-          const isActive = pathname === href;
+          const isActive = href === '/dashboard' ? pathname === href : pathname.startsWith(href);
           return (
             <Link
               key={href}
@@ -86,19 +83,6 @@ export function Sidebar() {
           );
         })}
 
-        <div className="w-5 my-2" style={{ borderTop: '1px solid var(--border)' }} />
-
-        {SECONDARY_ITEMS.map(({ href, icon: Icon, label, disabled }) => (
-          <button
-            key={href}
-            title={`${label} (Coming soon)`}
-            disabled={disabled}
-            className="w-9 h-9 rounded-lg flex items-center justify-center opacity-30 cursor-not-allowed"
-            style={{ color: 'var(--fg-dim)' }}
-          >
-            <Icon size={18} />
-          </button>
-        ))}
       </nav>
 
       {/* Live indicator */}
@@ -114,6 +98,13 @@ export function Sidebar() {
           appearance={{
             elements: {
               avatarBox: 'w-7 h-7',
+              userButtonPopoverCard: { background: 'var(--bg-elevated)', border: '1px solid var(--border)' },
+              userButtonPopoverActionButton: { color: '#ffffff' },
+              userButtonPopoverActionButtonText: { color: '#ffffff' },
+              userButtonPopoverActionButtonIcon: { color: '#ffffff' },
+              userButtonPopoverFooter: { display: 'none' },
+              userPreviewMainIdentifier: { color: '#ffffff' },
+              userPreviewSecondaryIdentifier: { color: '#c8cadb' },
             },
           }}
         />

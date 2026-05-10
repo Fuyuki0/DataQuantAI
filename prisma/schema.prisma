@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Database Schema (Prisma 7)
+// DataQuantAI — Database Schema (Prisma 7)
 // ═══════════════════════════════════════════
 
 generator client {

@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Alpha Vantage Market Data Client
+// DataQuantAI — Alpha Vantage Market Data Client
 // ═══════════════════════════════════════════
 
 import type { OHLCVData, TechnicalIndicators } from '@/types';
