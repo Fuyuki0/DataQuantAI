@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Clerk Sign Up Page
+// DataQuantAI — Clerk Sign Up Page
 // ═══════════════════════════════════════════
 
 import { SignUp } from '@clerk/nextjs';

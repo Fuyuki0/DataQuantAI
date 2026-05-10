@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Root Layout
+// DataQuantAI — Root Layout
 // ═══════════════════════════════════════════
 
 import type { Metadata } from 'next';
@@ -21,7 +21,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'FinalQuant — AI-Driven Financial Analysis',
+  title: 'DataQuantAI — AI-Driven Financial Analysis',
   description: 'Professional quantitative analysis platform powered by AI. Real-time charts, technical indicators, and Gemini-driven market insights for crypto, commodities, and indices.',
   keywords: ['quant', 'trading', 'analysis', 'crypto', 'AI', 'financial data', 'technical analysis'],
 };
@@ -40,15 +40,30 @@ export default function RootLayout({
           colorBackground: '#0f1117',
           colorInputBackground: '#151822',
           colorInputText: '#e8eaed',
+          colorText: '#ffffff',
+          colorTextSecondary: '#c8cadb',
+          colorTextOnPrimaryBackground: '#ffffff',
           borderRadius: '6px',
+        },
+        elements: {
+          headerTitle: { color: '#ffffff' },
+          headerSubtitle: { color: '#c8cadb' },
+          socialButtonsBlockButtonText: { color: '#ffffff' },
+          formFieldLabel: { color: '#c8cadb' },
+          formFieldInput: { color: '#e8eaed' },
+          footerActionText: { color: '#c8cadb' },
+          footerActionLink: { color: '#a78bfa' },
+          identityPreviewText: { color: '#ffffff' },
+          formResendCodeLink: { color: '#a78bfa' },
+          dividerText: { color: '#8b8fa3' },
         },
       }}
     >
       <html
         lang="en"
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <body className="h-full">{children}</body>
+        <body>{children}</body>
       </html>
     </ClerkProvider>
   );

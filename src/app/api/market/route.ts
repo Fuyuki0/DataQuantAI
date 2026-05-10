@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Market Data API Route
+// DataQuantAI — Market Data API Route
 // ═══════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server';

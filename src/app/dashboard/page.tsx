@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Dashboard Page (Main Split View)
+// DataQuantAI — Dashboard Page (Main Split View)
 // ═══════════════════════════════════════════
 
 'use client';
@@ -11,20 +11,42 @@ import { SymbolSelector } from '@/components/chart/SymbolSelector';
 import { AIPanel } from '@/components/analysis/AIPanel';
 import { useMarketData } from '@/hooks/useMarketData';
 import { useAnalysis } from '@/hooks/useAnalysis';
+import { useSettings } from '@/hooks/useSettings';
 import { SUPPORTED_ASSETS, type Asset, type Timeframe } from '@/types';
 import { RefreshCw, Clock, Wifi } from 'lucide-react';
 
 export default function DashboardPage() {
-  const [selectedAsset, setSelectedAsset] = useState<Asset>(SUPPORTED_ASSETS[0]); // Default: Bitcoin
+  const { settings, loaded } = useSettings();
+
+  const [selectedAsset, setSelectedAsset] = useState<Asset>(SUPPORTED_ASSETS[0]);
   const [timeframe, setTimeframe] = useState<Timeframe>('1D');
-  const [splitPosition, setSplitPosition] = useState(62); // % width for chart
+  const [splitPosition, setSplitPosition] = useState(62);
+  const [settingsApplied, setSettingsApplied] = useState(false);
+
+  // Apply saved settings on first load
+  useEffect(() => {
+    if (!loaded || settingsApplied) return;
+    const savedAsset = SUPPORTED_ASSETS.find((a) => a.symbol === settings.defaultSymbol);
+    if (savedAsset) setSelectedAsset(savedAsset);
+    setTimeframe(settings.defaultTimeframe);
+    setSettingsApplied(true);
+  }, [loaded, settings, settingsApplied]);
 
   const { data: marketData, isLoading: isMarketLoading, refresh } = useMarketData(
     selectedAsset?.symbol || null,
     timeframe
   );
 
-  const { data: analysis, isLoading: isAnalyzing, error: analysisError, analyze } = useAnalysis();
+  const { data: analysis, isLoading: isAnalyzing, error: analysisError, analyze } = useAnalysis(
+    selectedAsset?.symbol || null
+  );
+
+  // Auto-analyze when asset changes (if setting is on)
+  useEffect(() => {
+    if (!settingsApplied || !settings.autoAnalyze || !selectedAsset) return;
+    analyze(selectedAsset.symbol, timeframe);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAsset?.symbol, settingsApplied]);
 
   // ── Resizer logic ──────────────────────
   const isDragging = useRef(false);
@@ -60,9 +82,7 @@ export default function DashboardPage() {
 
   // ── Handlers ───────────────────────────
   const handleAnalyze = useCallback(() => {
-    if (selectedAsset) {
-      analyze(selectedAsset.symbol, timeframe);
-    }
+    if (selectedAsset) analyze(selectedAsset.symbol, timeframe);
   }, [selectedAsset, timeframe, analyze]);
 
   const handleAssetChange = useCallback((asset: Asset) => {
@@ -132,6 +152,7 @@ export default function DashboardPage() {
                 candles={marketData.candles}
                 symbol={marketData.symbol}
                 isLoading={isMarketLoading}
+                showVolume={settings.showVolume}
               />
             ) : isMarketLoading ? (
               <div className="h-full flex items-center justify-center">
@@ -160,7 +181,7 @@ export default function DashboardPage() {
             >
               <div className="flex items-center gap-1.5">
                 <Clock size={10} style={{ color: 'var(--fg-dim)' }} />
-                <span className="text-[10px] font-mono" style={{ color: 'var(--fg-dim)' }}>
+                <span className="text-[10px] font-mono" style={{ color: 'var(--fg-dim)' }} suppressHydrationWarning>
                   {new Date().toLocaleTimeString()} · {timeframe}
                 </span>
               </div>
@@ -182,6 +203,7 @@ export default function DashboardPage() {
             error={analysisError}
             onAnalyze={handleAnalyze}
             selectedSymbol={selectedAsset?.symbol || null}
+            selectedAsset={selectedAsset}
           />
         </div>
       </div>

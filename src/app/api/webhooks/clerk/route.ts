@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-// FinalQuant — Clerk Webhook Handler
+// DataQuantAI — Clerk Webhook Handler
 // ═══════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server';
