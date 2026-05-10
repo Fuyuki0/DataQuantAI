@@ -1,0 +1,61 @@
+// ═══════════════════════════════════════════
+// FinalQuant — Database Schema (Prisma 7)
+// ═══════════════════════════════════════════
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  name      String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  watchlist       Watchlist[]
+  analysisHistory AnalysisHistory[]
+}
+
+model Watchlist {
+  id        String   @id @default(cuid())
+  userId    String
+  symbol    String
+  name      String
+  assetType AssetType
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, symbol])
+  @@index([userId])
+}
+
+model AnalysisHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  symbol    String
+  timeframe String
+  fixedData  Json
+  dynamicData Json
+  aiModel   String   @default("gemini-2.0-flash-lite")
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([symbol])
+}
+
+enum AssetType {
+  CRYPTO
+  COMMODITY
+  INDEX
+  FOREX
+}
