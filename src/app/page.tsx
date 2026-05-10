@@ -7,9 +7,9 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import {
   Zap, ArrowRight, BarChart3, Brain, Shield,
-  TrendingUp, TrendingDown, Activity, MessageSquare,
-  History, Settings2, ChevronRight,
+  Activity, MessageSquare, History, Settings2, ChevronRight,
 } from 'lucide-react';
+import { HeroChart } from '@/components/home/HeroChart';
 
 export default async function LandingPage() {
   const { userId } = await auth();
@@ -55,15 +55,7 @@ export default async function LandingPage() {
     },
   ];
 
-  const mockCandles = [
-    { h: 40, bear: false }, { h: 55, bear: true }, { h: 35, bear: false },
-    { h: 65, bear: false }, { h: 45, bear: true }, { h: 70, bear: false },
-    { h: 50, bear: true }, { h: 80, bear: false }, { h: 60, bear: false },
-    { h: 90, bear: false }, { h: 75, bear: true }, { h: 85, bear: false },
-    { h: 70, bear: true }, { h: 95, bear: false }, { h: 80, bear: false },
-    { h: 100, bear: false }, { h: 85, bear: true }, { h: 110, bear: false },
-    { h: 95, bear: false }, { h: 120, bear: false },
-  ];
+  // Removed static mockCandles
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-x-hidden" style={{ background: 'var(--bg)' }}>
@@ -140,79 +132,8 @@ export default async function LandingPage() {
           ))}
         </div>
 
-        {/* Chart mockup */}
-        <div className="w-full max-w-4xl mx-auto rounded-2xl overflow-hidden animate-fade-in-up"
-          style={{ border: '1px solid var(--border)', background: 'var(--bg-elevated)', animationDelay: '400ms', boxShadow: '0 24px 80px rgba(0,0,0,0.5)' }}>
-          {/* Mockup top bar */}
-          <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--border)' }}>
-            <div className="flex items-center gap-3">
-              <span className="px-2 py-0.5 rounded text-xs font-mono font-semibold"
-                style={{ background: 'var(--accent-dim)', color: 'var(--accent)' }}>BTC/USD</span>
-              <div className="flex gap-1.5">
-                {['1H','4H','1D','1W'].map((tf) => (
-                  <span key={tf} className="text-[10px] px-1.5 py-0.5 rounded font-mono"
-                    style={{ background: tf === '1D' ? 'var(--accent)' : 'var(--bg-surface)', color: tf === '1D' ? '#fff' : 'var(--fg-dim)' }}>
-                    {tf}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-bold font-mono" style={{ color: 'var(--fg)' }}>$104,320</span>
-              <span className="text-xs px-1.5 py-0.5 rounded font-semibold" style={{ background: 'var(--green-dim)', color: 'var(--green)' }}>+2.41%</span>
-            </div>
-          </div>
-
-          {/* Fake chart */}
-          <div className="relative px-6 py-4 h-48 flex items-end gap-1.5 overflow-hidden">
-            {/* Subtle grid lines */}
-            {[0,1,2,3].map((i) => (
-              <div key={i} className="absolute left-0 right-0" style={{ bottom: `${(i+1)*25}%`, borderTop: '1px solid var(--border)', opacity: 0.5 }} />
-            ))}
-            {/* Candles */}
-            {mockCandles.map((c, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center justify-end gap-0.5 relative" style={{ height: '100%' }}>
-                <div className="w-0.5 absolute" style={{
-                  height: `${c.h * 0.3}%`,
-                  background: c.bear ? 'var(--red)' : 'var(--green)',
-                  bottom: `${c.h}%`,
-                  opacity: 0.6,
-                }} />
-                <div className="w-full rounded-sm" style={{
-                  height: `${c.h * 0.5}%`,
-                  background: c.bear ? 'var(--red)' : 'var(--green)',
-                  opacity: 0.85,
-                  minHeight: '4px',
-                }} />
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom bar split: chart left | AI panel right */}
-          <div className="flex" style={{ borderTop: '1px solid var(--border)' }}>
-            <div className="flex-1 px-4 py-3 flex items-center gap-4">
-              {[['RSI(14)','67.4','var(--amber)'],['MACD','▲ Bullish','var(--green)'],['BB Width','2.4%','var(--fg-muted)']].map(([l,v,c]) => (
-                <div key={l}>
-                  <div className="text-[9px] uppercase tracking-wide" style={{ color: 'var(--fg-dim)' }}>{l}</div>
-                  <div className="text-xs font-mono font-semibold" style={{ color: c as string }}>{v}</div>
-                </div>
-              ))}
-            </div>
-            <div className="w-px" style={{ background: 'var(--border)' }} />
-            <div className="w-64 px-4 py-3">
-              <div className="flex items-center gap-1.5 mb-2">
-                <div className="w-4 h-4 rounded flex items-center justify-center" style={{ background: 'var(--accent-dim)' }}>
-                  <Brain size={9} style={{ color: 'var(--accent)' }} />
-                </div>
-                <span className="text-[10px] font-semibold" style={{ color: 'var(--fg)' }}>AI Analysis</span>
-                <span className="ml-auto text-[9px] px-1.5 py-0.5 rounded font-semibold" style={{ background: 'var(--green-dim)', color: 'var(--green)' }}>Bullish</span>
-              </div>
-              <div className="text-[10px] leading-relaxed" style={{ color: 'var(--fg-muted)' }}>
-                Strong uptrend with RSI at 67 — not yet overbought. MACD bullish crossover confirmed.
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Interactive Chart */}
+        <HeroChart />
       </main>
 
       {/* Features grid */}
