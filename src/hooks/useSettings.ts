@@ -7,6 +7,8 @@
 import { useState, useEffect } from 'react';
 import type { Timeframe } from '@/types';
 
+export type ThemeMode = 'dark' | 'light' | 'system';
+
 export interface AppSettings {
   defaultSymbol: string;
   defaultTimeframe: Timeframe;
@@ -15,6 +17,7 @@ export interface AppSettings {
   showVolume: boolean;
   notificationsEnabled: boolean;
   compactMode: boolean;
+  theme: ThemeMode;
 }
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -25,6 +28,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   showVolume: true,
   notificationsEnabled: false,
   compactMode: false,
+  theme: 'dark',
 };
 
 export const SETTINGS_KEY = 'dataquantai_settings';

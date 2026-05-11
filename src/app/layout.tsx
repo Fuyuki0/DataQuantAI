@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
+import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import './globals.css';
 
 const geistSans = localFont({
@@ -25,6 +26,22 @@ export const metadata: Metadata = {
   description: 'Professional quantitative analysis platform powered by AI. Real-time charts, technical indicators, and Gemini-driven market insights for crypto, commodities, and indices.',
   keywords: ['quant', 'trading', 'analysis', 'crypto', 'AI', 'financial data', 'technical analysis'],
 };
+
+// Inline script to prevent flash of wrong theme before hydration
+const themeInitScript = `
+(function() {
+  try {
+    var raw = localStorage.getItem('dataquantai_settings');
+    var theme = raw ? JSON.parse(raw).theme : 'dark';
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  } catch(e) {}
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -62,9 +79,16 @@ export default function RootLayout({
       <html
         lang="en"
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
-        <body>{children}</body>
+        <head>
+          <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        </head>
+        <body>
+          <ThemeProvider>{children}</ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
 }
+

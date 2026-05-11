@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Settings, Monitor, BarChart2, Brain, Bell, RotateCcw, CheckCircle } from 'lucide-react';
+import { Settings, Monitor, BarChart2, Brain, Bell, RotateCcw, CheckCircle, Sun, Moon, Laptop } from 'lucide-react';
 import { SUPPORTED_ASSETS, type Timeframe } from '@/types';
-import { useSettings } from '@/hooks/useSettings';
+import { useSettings, type ThemeMode } from '@/hooks/useSettings';
 
 export default function SettingsPage() {
   const { settings, update, reset } = useSettings();
@@ -15,10 +15,18 @@ export default function SettingsPage() {
     setTimeout(() => setShowSaved(false), 1500);
   };
 
+  const handleThemeUpdate = (theme: ThemeMode) => {
+    handleUpdate('theme', theme);
+    // Dispatch custom event so the ThemeProvider reacts immediately (same tab)
+    window.dispatchEvent(new CustomEvent('dataquantai-theme-change', { detail: theme }));
+  };
+
   const handleReset = () => {
     reset();
     setShowSaved(true);
     setTimeout(() => setShowSaved(false), 1500);
+    // Reset theme to dark
+    window.dispatchEvent(new CustomEvent('dataquantai-theme-change', { detail: 'dark' }));
   };
 
   const TIMEFRAMES: Timeframe[] = ['1H', '4H', '1D', '1W', '1M'];
@@ -27,6 +35,12 @@ export default function SettingsPage() {
     { value: 'balanced', label: 'Balanced', desc: 'Recommended default' },
     { value: 'creative', label: 'Creative', desc: 'More varied insights' },
   ] as const;
+
+  const THEME_MODES: { value: ThemeMode; label: string; icon: React.ElementType; desc: string }[] = [
+    { value: 'dark', label: 'Dark', icon: Moon, desc: 'Always use dark theme' },
+    { value: 'light', label: 'Light', icon: Sun, desc: 'Always use light theme' },
+    { value: 'system', label: 'System', icon: Laptop, desc: 'Follow system preference' },
+  ];
 
 
   const Toggle = ({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) => (
@@ -96,6 +110,31 @@ export default function SettingsPage() {
       <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4 max-w-2xl">
         {/* Display */}
         <Section icon={Monitor} title="Display">
+          <Row label="Theme" desc="Choose your preferred appearance">
+            <div className="flex gap-1">
+              {THEME_MODES.map((t) => {
+                const Icon = t.icon;
+                const isActive = settings.theme === t.value;
+                return (
+                  <button
+                    key={t.value}
+                    id={`settings-theme-${t.value}`}
+                    onClick={() => handleThemeUpdate(t.value)}
+                    title={t.desc}
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[10px] font-semibold transition-all"
+                    style={{
+                      background: isActive ? 'var(--accent)' : 'var(--bg-surface)',
+                      color: isActive ? '#fff' : 'var(--fg-muted)',
+                      border: '1px solid var(--border)',
+                    }}
+                  >
+                    <Icon size={11} />
+                    {t.label}
+                  </button>
+                );
+              })}
+            </div>
+          </Row>
           <Row label="Compact Mode" desc="Reduce spacing and padding">
             <Toggle value={settings.compactMode} onChange={(v) => handleUpdate('compactMode', v)} />
           </Row>
